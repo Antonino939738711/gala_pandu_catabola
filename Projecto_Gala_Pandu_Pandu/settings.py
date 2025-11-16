@@ -40,6 +40,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',  # adicionei para debug
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -48,7 +49,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Projecto_Gala_Pandu_Pandu.wsgi.app'  # único e correto
+# ⚠️ Corrigido: só uma linha, e apontando para "app"
+WSGI_APPLICATION = 'Projecto_Gala_Pandu_Pandu.wsgi.app'
 
 DATABASES = {
     'default': {
@@ -81,3 +83,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
