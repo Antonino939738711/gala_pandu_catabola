@@ -1,0 +1,8 @@
+{
+  "builds": [
+    { "src": "Projecto_Gala_Pandu_Pandu/wsgi.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "Projecto_Gala_Pandu_Pandu/wsgi.py" }
+  ]
+}

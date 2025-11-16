@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsividade -->
+  <title>Home - Gala Pandu Pandu</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.0/dist/tailwind.min.css" rel="stylesheet">
+  <script src="{% static 'css/3.4.js' %}"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600 text-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center px-4 sm:px-6 py-3">
+      <div class="flex items-center space-x-2">
+        <img src="{% static 'PANDU.png' %}" alt="Logo" 
+             class="w-14 h-14 sm:w-20 sm:h-20 rounded-full shadow-md border-2 border-white bg-black p-1">
+        <h1 class="text-lg sm:text-2xl font-extrabold uppercase tracking-wide">Gala Pandu Pandu</h1>
+      </div>
+
+      <!-- Botão menu mobile -->
+      <button id="menu-btn" class="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <!-- Navegação -->
+      <nav id="menu" class="hidden md:flex md:items-center md:space-x-6 text-sm sm:text-base">
+        <a href="{% url 'home' %}" class="hover:underline">Início</a>
+        <a href="#sobre" class="hover:underline">Sobre</a>
+        <a href="#categorias" class="hover:underline">Categorias</a>
+        <a href="#contacto" class="hover:underline">Contacto</a>
+
+        {% if user.is_authenticated %}
+          {% if user.tipo == "votante" or user.tipo == "candidato" %}
+            <a href="{% url 'pagina_votacao' %}" 
+              class="bg-yellow-400 text-indigo-900 font-semibold px-4 py-2 rounded-full hover:bg-yellow-300 transition shadow-md">
+              🎖️ Votar
+            </a>
+          {% endif %}
+          <a href="{% url 'sair' %}" 
+             class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition shadow-md">
+             Sair
+          </a>
+        {% else %}
+          <a href="{% url 'login' %}" 
+             class="bg-white text-indigo-700 px-4 py-2 rounded-full hover:bg-gray-100 transition shadow-md">
+             Login
+          </a>
+        {% endif %}
+
+        {% if user.is_staff %}
+          <a href="#" 
+             class="bg-white text-indigo-700 px-4 py-2 rounded-full hover:bg-gray-100 transition shadow-md">
+             Gerir
+          </a>
+        {% endif %}
+      </nav>
+    </div>
+
+    <!-- Menu mobile dropdown -->
+    <div id="mobile-menu" class="hidden flex-col bg-indigo-800 md:hidden text-white space-y-3 px-4 py-4">
+      <a href="{% url 'home' %}" class="hover:text-yellow-300">Início</a>
+      <a href="#sobre" class="hover:text-yellow-300">Sobre</a>
+      <a href="#categorias" class="hover:text-yellow-300">Categorias</a>
+      <a href="#contacto" class="hover:text-yellow-300">Contacto</a>
+
+      {% if user.is_authenticated %}
+        {% if user.tipo == "votante" or user.tipo == "candidato" %}
+          <a href="{% url 'pagina_votacao' %}" class="bg-yellow-400 text-indigo-900 font-semibold px-4 py-2 rounded-full text-center">
+            🎖️ Votar
+          </a>
+        {% endif %}
+        <a href="{% url 'sair' %}" class="bg-red-500 px-4 py-2 rounded-full text-center">Sair</a>
+      {% else %}
+        <a href="{% url 'login' %}" class="bg-white text-indigo-700 px-4 py-2 rounded-full text-center">Login</a>
+      {% endif %}
+
+      {% if user.is_staff %}
+        <a href="#" class="bg-white text-indigo-700 px-4 py-2 rounded-full text-center">Gerir</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-16 sm:py-24 text-center px-6">
+    <h2 class="text-3xl sm:text-5xl font-extrabold mb-6 animate-pulse">🌟 Gala Pandu Pandu 2025 🌟</h2>
+    <p class="text-base sm:text-xl max-w-3xl mx-auto leading-relaxed">
+      Catabola celebra seus <strong>maiores talentos</strong>!  
+      Uma noite única de <span class="font-semibold">glamour, cultura, desporto, inovação e reconhecimento</span>.  
+      O orgulho da <strong>província do Bié</strong> brilha aqui!
+    </p>
+  </section>
+
+  <!-- Sobre -->
+  <section id="sobre" class="py-16 sm:py-20 container mx-auto px-6 text-center">
+    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-6">✨ Sobre a Gala</h3>
+    <p class="text-gray-700 leading-relaxed max-w-3xl mx-auto text-sm sm:text-base">
+      A <strong>Gala Pandu Pandu</strong> é o evento anual que destaca os <strong>talentos de Catabola</strong>.  
+      Mais do que uma premiação, é um momento de celebração do trabalho, da dedicação e da inspiração que 
+      move a nossa comunidade em áreas como <em>cultura, educação, desporto, tecnologia, ação social e empreendedorismo</em>.
+    </p>
+  </section>
+
+  <!-- Categorias -->
+  <section id="categorias" class="py-16 sm:py-20 bg-gray-100">
+    <div class="container mx-auto px-6">
+      <h3 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-10 text-center">🏆 Categorias de Premiação</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+        {% for cat in categorias %}
+        <div class="bg-white shadow-lg rounded-2xl p-6 sm:p-8 hover:scale-[1.03] hover:shadow-xl 
+                    transition transform space-y-5 border border-gray-100">
+          <h4 class="text-xl sm:text-2xl font-bold text-indigo-700 flex items-center gap-2">
+            {{ cat.icone }} 
+            <span class="truncate">{{ cat.titulo }}</span>
+          </h4>
+          <p class="text-gray-600 leading-relaxed text-sm sm:text-base">
+            {{ cat.descricao }}
+          </p>
+          <a href="{% url 'pagina_votacao' %}" 
+             class="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white font-semibold 
+                    px-5 py-2.5 rounded-full hover:bg-indigo-700 hover:-translate-y-0.5 
+                    transition-all duration-200 ease-in-out shadow-md focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2">
+            Visitar
+          </a>
+        </div>
+        {% empty %}
+          <p class="text-center text-gray-500 col-span-full">Nenhuma categoria cadastrada ainda.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="py-16 sm:py-20 container mx-auto px-6 text-center">
+    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-6">📩 Contacto</h3>
+    <p class="text-gray-700 max-w-2xl mx-auto mb-4 text-sm sm:text-base">
+      Quer saber mais sobre a Gala Pandu Pandu? Entre em contacto conosco:
+    </p>
+    <p class="mt-2 text-indigo-600 font-semibold">📧 gala@pandupandu.org</p>
+    <p class="text-indigo-600 font-semibold">📞 +244 974 725 068</p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600 text-white py-6 text-center mt-auto">
+    <p class="text-xs sm:text-sm">&copy; 2025 Gala Pandu Pandu - Catabola, Bié. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Script menu mobile -->
+  <script>
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+  </script>
+
+</body>
+</html>
+

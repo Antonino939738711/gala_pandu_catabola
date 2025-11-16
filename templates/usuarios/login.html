@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- fundamental p/ mobile -->
+  <title>Login - Gala Pandu Pandu</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.0/dist/tailwind.min.css" rel="stylesheet">
+  <script src="{% static 'css/3.4.js' %}"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+  <div class="bg-white shadow-xl rounded-2xl p-6 sm:p-8 w-full max-w-sm sm:max-w-md 
+              transition-all duration-300 transform hover:scale-[1.01]">
+    
+    <!-- Logo -->
+    <div class="text-center mb-8">
+      <img src="{% static 'PANDU.png' %}" alt="Logo Gala Pandu Pandu"
+           class="mx-auto w-24 h-24 sm:w-28 sm:h-28 rounded-full shadow-lg border-4 border-indigo-600 bg-black p-2">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-indigo-700 tracking-wide mt-4 uppercase">
+        Login
+      </h1>
+    </div>
+
+    <!-- Mensagens Django -->
+    {% if messages %}
+      <div class="mb-4 space-y-2">
+        {% for message in messages %}
+          <div class="px-4 py-2 rounded text-sm sm:text-base 
+                      {% if message.tags == 'error' %} bg-red-100 border border-red-400 text-red-700 
+                      {% elif message.tags == 'success' %} bg-green-100 border border-green-400 text-green-700 
+                      {% else %} bg-gray-100 border border-gray-400 text-gray-700 {% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Formulário -->
+    <form method="post" class="space-y-5">
+      {% csrf_token %}
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" name="username" value="{{ form.username.value|default_if_none:'' }}" required
+               class="mt-1 w-full px-3 py-2 border rounded-lg text-base sm:text-sm
+                      focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Senha</label>
+        <input type="password" name="password" required
+               class="mt-1 w-full px-3 py-2 border rounded-lg text-base sm:text-sm
+                      focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition">
+      </div>
+
+      <button type="submit"
+              class="w-full bg-indigo-600 text-white py-2 sm:py-3 text-sm sm:text-base font-semibold rounded-lg 
+                     hover:bg-indigo-700 active:scale-[0.98] transition-all duration-150">
+        Entrar
+      </button>
+    </form>
+
+    <!-- Link cadastro -->
+    <p class="mt-5 text-sm text-gray-600 text-center">
+      Não tem conta?
+      <a href="{% url 'cadastro' %}" class="text-indigo-600 font-semibold hover:underline">
+        Cadastrar
+      </a>
+    </p>
+  </div>
+</body>
+</html>
