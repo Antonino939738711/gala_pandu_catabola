@@ -59,7 +59,6 @@ def cadastro_view(request):
 def home(request):
     categorias = Categoria.objects.all()
     return render(request, "usuarios/home.html", {"categorias": categorias})
-
 @login_required
 def pagina_votacao(request):
     categorias = Categoria.objects.prefetch_related("candidatos__usuario")
@@ -76,10 +75,15 @@ def pagina_votacao(request):
             reverse=True
         )
         
+        # 🎯 CORREÇÃO AQUI: Inicializamos a variável com 0.
+        # Isso garante que 'percentagem' sempre terá um valor, mesmo que a categoria
+        # não tenha candidatos e o loop 'for c in candidatos_ordenados' não seja executado.
+        percentagem = 0 
+        
         # adiciona percentual dentro dos objetos
         for c in candidatos_ordenados:
             c.percentual = int(round((c.votos_totais / total_votos) * 100, 2))
-            percentagem = int(c.percentual)
+            percentagem = int(c.percentual) # A variável será sobrescrita aqui se houver candidatos
 
         contexto.append({
             "id": categoria.id,
@@ -87,7 +91,7 @@ def pagina_votacao(request):
             "titulo": categoria.titulo,
             "descricao": categoria.descricao,
             "candidatos_ordenados": candidatos_ordenados,  
-            "percentagem":percentagem,
+            "percentagem": percentagem, # Variável agora garantida
         })
 
     return render(request, "usuarios/votar.html", {"categorias": contexto,"percent":percent})
@@ -107,6 +111,8 @@ def votar(request, candidato_id):
     else:
         Voto.objects.create(votante=usuario, candidato=candidato, categoria=categoria)
         messages.success(request, f"Voto registrado em {candidato.usuario.nome} ({categoria.titulo}).")
+
+    return redirect("pagina_votacao")
 
     return redirect("pagina_votacao")
 @login_required
