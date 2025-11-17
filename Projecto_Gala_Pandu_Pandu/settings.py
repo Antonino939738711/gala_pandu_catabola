@@ -54,10 +54,16 @@ WSGI_APPLICATION = 'Projecto_Gala_Pandu_Pandu.wsgi.app'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # simples para testes
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'XCYoOlwplVlOlhsOZbocanikeuLWRhmL',
+        'HOST': 'gondola.proxy.rlwy.net',
+        'PORT': '29634',
     }
 }
+
+
 
 AUTH_USER_MODEL = "app_Gala_Pandu_Pandu.Usuario"
 
